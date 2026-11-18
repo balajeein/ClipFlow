@@ -8,7 +8,8 @@ import type { ReadableStream as NodeReadableStream } from "node:stream/web";
 import type { Context } from "grammy";
 import { config } from "../config/env.js";
 
-const DEFAULT_MAX_VIDEO_BYTES = 50 * 1024 * 1024;
+// Telegram's hosted Bot API limits bot downloads through getFile to 20 MB.
+const DEFAULT_MAX_VIDEO_BYTES = 20 * 1024 * 1024;
 
 export type TelegramVideo = {
   fileId: string;

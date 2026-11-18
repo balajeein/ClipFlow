@@ -20,6 +20,14 @@ function safeErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : "Unknown upload error";
 }
 
+function publicUploadFailureMessage(error: unknown): string {
+  const message = safeErrorMessage(error).toLowerCase();
+  if (message.includes("too big") || message.includes("exceeds")) {
+    return "That video is too large for Telegram bot download. The current limit is 20 MB.";
+  }
+  return "I couldn't upload that video to YouTube.";
+}
+
 function isFromConfiguredGroup(ctx: Context): boolean {
   const chatId = String(ctx.chat?.id ?? "");
   return chatId === config.telegram.groupId;
@@ -54,8 +62,15 @@ export function registerIngestionHandlers(bot: Bot): void {
         `Uploaded to YouTube (${result.channelName}):\n${result.videoUrl}`,
       );
     } catch (error) {
-      logger.error({ message: safeErrorMessage(error) }, "Telegram video upload failed");
-      await ctx.reply("I couldn't upload that video to YouTube.");
+      logger.error(
+        {
+          message: safeErrorMessage(error),
+          fileName: telegramVideo.fileName,
+          fileSize: telegramVideo.fileSize,
+        },
+        "Telegram video upload failed",
+      );
+      await ctx.reply(publicUploadFailureMessage(error));
     }
   });
 }
