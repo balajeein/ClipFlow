@@ -1,0 +1,30 @@
+{
+  "name": "clipflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Telegram-to-YouTube URL queue bot",
+  "type": "module",
+  "scripts": {
+    "bot": "tsx src/bot/index.ts",
+    "youtube:auth": "tsx scripts/youtube-auth.ts",
+    "youtube:verify": "tsx scripts/youtube-verify.ts",
+    "uploader": "tsx src/uploader/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/bot/index.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
+    "dotenv": "^16.4.7",
+    "ffmpeg-static": "^5.3.0",
+    "googleapis": "^144.0.0",
+    "grammy": "^1.35.0",
+    "pino": "^9.6.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
+  }
+}
