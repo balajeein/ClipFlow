@@ -59,7 +59,7 @@ export function registerIngestionHandlers(bot: Bot): void {
       });
 
       await ctx.reply(
-        `Uploaded to YouTube (${result.channelName}):\n${result.videoUrl}`,
+        `Scheduled on YouTube (${result.channelName}) for ${result.scheduledFor} ET:\n${result.videoUrl}`,
       );
     } catch (error) {
       logger.error(
